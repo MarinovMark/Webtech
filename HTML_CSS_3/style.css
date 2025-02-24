@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+h1 {
+    text-align: center;
+    font-style: italic;
+}
+h3 {
+    text-align: left;
+    color: #666;
+}   
+
+.quote {
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+.bio-box {
+    background: #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+.bio-box img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+.bio-box h2 {
+    background: #666;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+.bio-box ul {
+    list-style-type: square;
+    text-align: left;
+    padding-left: 20px;
+}
+.content {
+    margin-top: 10px;
+    line-height: 1.6;
+    text-align: justify;
+}
+.highlight {
+    font-weight: bold;
+    font-style: italic;
+}
+.neumann {
+    line-height: 1.2;
+}
