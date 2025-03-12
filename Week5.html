@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dinamikus Teendő Lista</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            padding: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 90px);
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 8px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            background-color: #ffffff;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        li:hover {
+            background-color: #e9ecef;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h1>Teendő Lista</h1>
+    <div>
+        <input type="text" id="todoInput" placeholder="Írj be egy teendőt">
+        <button onclick="addTodo()">Hozzáadás</button>
+    </div>
+    <ul id="todoList">
+    </ul>
+
+    <script>
+        function addTodo() {
+            const input = document.getElementById('todoInput');
+            const todoText = input.value.trim();
+
+            if (todoText !== '') {
+                const todoList = document.getElementById('todoList');
+                const newTodo = document.createElement('li');
+                newTodo.textContent = todoText;
+                
+                newTodo.addEventListener('click', () => {
+                    newTodo.classList.toggle('completed');
+                });
+
+                todoList.appendChild(newTodo);
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        // Enter billentyű lenyomására is működjön
+        document.getElementById('todoInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addTodo();
+            }
+        });
+    </script>
+</body>
+</html>
