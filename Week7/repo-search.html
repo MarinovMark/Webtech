@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git App - Felhasználó keresés</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h4>Felhasználó keresése</h4>
+
+    <label for="username">Felhasználónév:</label>
+    <input type="text" id="username">
+    <button id="user-search-btn" class="btn btn-primary">Keresés</button>
+
+    <div id="user-results"></div>
+
+    <script src="app.js"></script>
+    <script>
+        const searchUserBtn = document.querySelector('#user-search-btn');
+        searchUserBtn.addEventListener('click', () => {
+            const username = document.querySelector('#username').value.trim();
+
+            if (username === '') {
+                alert('Kérlek, adj meg egy felhasználónevet!');
+                return;
+            }
+
+            fetch('https://api.github.com/search/users?q=' + encodeURIComponent(username), {
+                headers: {
+                    'Authorization': 'Bearer ' + GITHUB_ACCESS_TOKEN
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                const resultsDiv = document.querySelector('#user-results');
+                resultsDiv.innerHTML = '';
+
+                if (!data.items || data.items.length === 0) {
+                    resultsDiv.innerHTML = '<p>Nincs találat.</p>';
+                    return;
+                }
+
+                for (const user of data.items) {
+                    const userHtml = `
+                        <div class="card">
+                            <img src="${user.avatar_url}" alt="${user.login}" width="100" height="100">
+                            <h4>${user.login}</h4>
+                            <a href="${user.html_url}" target="_blank">Profil megnyitása</a>
+                        </div>
+                    `;
+                    resultsDiv.innerHTML += userHtml;
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Hiba történt a keresés során.');
+            });
+        });
+    </script>
+</body>
+</html>
