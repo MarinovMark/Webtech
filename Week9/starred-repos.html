@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kedvenc repo-k</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Kedvenc (csillagozott) repository-k</h2>
+    <div id="starred-repos"></div>
+
+    <script src="app.js"></script>
+    <script>
+        fetch('https://api.github.com/user/starred', {
+            headers: {
+                'Authorization': 'Bearer ' + GITHUB_ACCESS_TOKEN
+            }
+        })
+        .then(res => {
+            if (!res.ok) throw new Error("Hiba történt a GitHub API elérésekor!");
+            return res.json();
+        })
+        .then(data => {
+            const container = document.getElementById('starred-repos');
+
+            if (data.length === 0) {
+                container.innerHTML = '<p>Nincs csillagozott repository.</p>';
+                return;
+            }
+
+            data.forEach(repo => {
+                const link = document.createElement('a');
+                link.href = `repo.html?name=${repo.full_name}`;
+                link.textContent = repo.full_name;
+                link.style.display = 'block';
+                link.style.marginBottom = '10px';
+
+                container.appendChild(link);
+            });
+        })
+        .catch(err => {
+            console.error(err);
+            document.getElementById('starred-repos').innerHTML = '<p>Hiba történt a kedvenc repository-k lekérésekor.</p>';
+        });
+    </script>
+</body>
+</html>
